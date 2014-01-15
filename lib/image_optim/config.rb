@@ -9,6 +9,8 @@ class ImageOptim
   class Config
     include OptionHelpers
 
+    mattr_accessor :local_config_file
+
     GLOBAL_CONFIG_PATH = File.join(File.expand_path(ENV['XDG_CONFIG_HOME'] || '~/.config'), 'image_optim.yml')
     LOCAL_CONFIG_PATH = '.image_optim.yml'
 
@@ -18,7 +20,7 @@ class ImageOptim
       end
 
       def local
-        File.file?(LOCAL_CONFIG_PATH) ? read(LOCAL_CONFIG_PATH) : {}
+        local_config_file ||= File.file?(LOCAL_CONFIG_PATH) ? read(LOCAL_CONFIG_PATH) : {}
       end
 
     private
